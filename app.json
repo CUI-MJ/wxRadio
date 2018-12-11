@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/my/my",
     "pages/index/index",
     "pages/reg/reg",
-    "pages/logs/logs",
-    "pages/my/my"
+    "pages/course/course",
+    "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,12 +14,12 @@
   },
   "tabBar": {
     "color": "#a9b7b7",
-    "selectedColor": "#11cd6e",
+    "selectedColor": "#006f7c",
     "borderStyle": "black",
     "list": [{
       "selectedIconPath": "/images/search02.png",
       "iconPath": "/images/search01.png",
-      "pagePath": "pages/logs/logs",
+      "pagePath": "pages/course/course",
       "text": "首页"
     }, {
       "selectedIconPath": "images/my02.png",
