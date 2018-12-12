@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/course/course",
+    "pages/details/details",
     "pages/my/my",
     "pages/index/index",
     "pages/reg/reg",
-    "pages/course/course",
     "pages/logs/logs"
   ],
   "window": {
