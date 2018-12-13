@@ -102,7 +102,7 @@ Page({
     }
     else{
       if(one == 0&&two == 0){
-        console.log('视频可以观看')
+        return console.log('视频可以观看')
       }
       if(two == 0){
         if(this.data.videLists[one-1].chapter[this.data.videLists[one-1].chapter.length-1].issee){
@@ -111,10 +111,19 @@ Page({
           console.log('有视频未看完')
         }
       }else{
-        if(this.data.videLists[one-1].chapter[two-1].issee){
-          console.log('视频可以观看')
-        }else{
-          console.log('有视频未看完')
+        if(one == 0){
+          if(this.data.videLists[one].chapter[two-1].issee){
+            console.log('视频可以观看')
+          }else{
+            console.log('有视频未看完')
+          }
+        }
+        else{
+          if(this.data.videLists[one-1].chapter[two-1].issee){
+            console.log('视频可以观看')
+          }else{
+            console.log('有视频未看完')
+          }
         }
       }  
     }

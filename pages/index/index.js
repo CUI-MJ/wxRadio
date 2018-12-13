@@ -58,6 +58,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-    wx.setStorageSync('userInfo', res.userInfo)
+    wx.setStorageSync('userInfo', e.detail.userInfo)
   }
 })
