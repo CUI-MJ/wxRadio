@@ -1,9 +1,11 @@
 {
   "pages": [
+    "pages/exam/exam",
+    "pages/courselists/courselists",
+    "pages/index/index",
     "pages/course/course",
     "pages/details/details",
     "pages/my/my",
-    "pages/index/index",
     "pages/reg/reg",
     "pages/logs/logs"
   ],

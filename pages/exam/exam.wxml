@@ -1,0 +1,13 @@
+<view class="page exam">
+    <view class="page__bd">
+        <view class="section section_gap" wx:for="{{checkdata}}" wx:for-index="idx" wx:for-item="itemName">
+            <text>{{itemName.title}}</text>
+            <radio-group class="radio-group" bindchange="radioChange">
+                <radio class="radio" wx:for-items="{{itemName.items}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+                    <text class="radioText">{{item.name}} : {{item.value}}</text>
+                </radio>
+            </radio-group>
+        </view>
+       <button class="weui-btn" type="primary">提交</button>
+    </view>
+</view>

@@ -1,8 +1,12 @@
 <!--pages/details/details.wxml-->
 <video 
+    class="videos"
     src="http://1256136328.vod2.myqcloud.com/53c169cfvodtranscq1256136328/e96e24345285890783542766505/v.f20.mp4"
-    enable-danmu
-    danmu-btn
     controls
+    autoplay
+    bindended="videoEnd"
+    bindtimeupdate = "timeupdate"
+    binderror = "playerror"
+    bindpause = "pause"
 >
 </video>
