@@ -1,0 +1,19 @@
+<!--pages/courselists/courselists.wxml-->
+<view class="page courselists">
+    <view class="chapterList" wx:for="{{videLists}}" wx:for-index="idx" wx:for-item="itemName"  wx:key="*this">
+        <view class="weui-cells weui-cells_after-title" wx:for="{{itemName.chapter}}" wx:key="id" wx:for-index="index">
+           <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-id="{{idx}}-{{index}}" bindtap="tapVideo">
+                <view class="weui-cell__hd" data-id="{{idx}}-{{index}}">
+                    <image data-id="{{idx}}-{{index}}" src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:16px; height:16px;margin-top:-3px;"></image>
+                </view>
+                <view data-id="{{idx}}-{{index}}" class="weui-cell__bd {{item.issee? 'isSelect' : ''}}">{{item.title}}</view>
+                <view data-id="{{idx}}-{{index}}" class="weui-cell__ft weui-cell__ft_in-access">{{item.time}}</view>
+            </view>
+        </view>
+        <view class="line">  
+        </view>
+        <button class="weui-btn btn" type="default" data-btnid="{{idx}}" bindtap="tabExercises">进入习题</button>
+    </view>
+    <button class="weui-btn submit mt20" type="primary" bindtap="tabExam">进入测试</button>
+</view>
+
