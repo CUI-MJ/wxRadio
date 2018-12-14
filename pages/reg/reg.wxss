@@ -11,3 +11,6 @@
     margin: 0px;
     color: #006f7c;
 }
+.pagelast{
+    text-align: center;
+}

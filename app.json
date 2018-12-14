@@ -1,12 +1,12 @@
 {
   "pages": [
-    "pages/courselists/courselists",
+    "pages/reg/reg",
     "pages/index/index",
+    "pages/courselists/courselists",
     "pages/exam/exam",
     "pages/course/course",
     "pages/details/details",
     "pages/my/my",
-    "pages/reg/reg",
     "pages/logs/logs"
   ],
   "window": {

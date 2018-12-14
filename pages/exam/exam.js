@@ -40,12 +40,16 @@ Page({
     ],
     countDownMinute:0,
     countDownSecond:0,
+    current:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      current:options.courseid
+    });
     this.CountDown(15*60);
   },
 
@@ -99,7 +103,24 @@ Page({
   },
   // 点击表单提交
   submit: function () {
-    console.log(checkValue)
+    var that = this;
+    var storage = wx.getStorageSync('answerList')
+    var answerList = [];
+    var obj = {
+      id:this.data.current,
+      answer:checkValue,
+    }
+    if(storage !== ''){
+      storage.forEach((key,i)=>{
+        if(key.id == that.data.current){
+          storage.splice(i,1,obj)
+        }
+      })
+      wx.setStorageSync('answerList',storage)
+    }else{
+      answerList.push(obj)
+      wx.setStorageSync('answerList',answerList)
+    }
   },
   // 点击单选框
   radioChange(e) {
@@ -120,7 +141,7 @@ Page({
       checkValue.push({ id: ID, value: value })
     }
   },
-
+  //倒计时
   CountDown(totalSecond) {
     var interval = setInterval(function () {
       // 秒数
@@ -162,5 +183,15 @@ Page({
         });
       }
     }.bind(this), 1000);
+  },
+  //数据回显
+  dataDisplay(){
+     var that = this;
+     var storage = wx.getStorageSync('answerList')
+     storage.forEach((key,i)=>{
+      if(key.id == that.data.current){
+        
+      }
+    })
   }
 })

@@ -33,6 +33,10 @@
                 </view>
             </view>
         </view>
+        
     </view>
-   
+    <view class="page__bd pagelast">
+        <button class="weui-btn mini-btn" type="primary" size="mini">提交</button>
+    </view>
+    
 </view>

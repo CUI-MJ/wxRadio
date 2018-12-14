@@ -13,25 +13,28 @@ Page({
                 {title:'《我国食品安全标准解读_解读》3_章节1',time:'10:00',id:1,issee:true,},
                 {title:'《我国食品安全标准解读_解读》3_章节2',time:'10:00',id:2,issee:true,},
                 {title:'《我国食品安全标准解读_解读》3_章节3',time:'10:00',id:3,issee:true,},
-                {title:'《我国食品安全标准解读_解读》3_章节4',time:'10:00',id:4,issee:false,},
-               ]
-        
+                {title:'《我国食品安全标准解读_解读》3_章节4',time:'10:00',id:4,issee:true,},
+               ],
+               courseId:1,
       },
       {
         chapter:[
                 {title:'食品安全基础知识1_章节1',time:'10:00',id:5,issee:false,},
-               ]
+               ],
+               courseId:2,
       },
       {
         chapter:[
                 {title:'食品安全基础知识1_章节2',time:'10:00',id:6,issee:false,},
                 {title:'食品安全基础知识1_章节3',time:'10:00',id:7,issee:false,},
-               ]
+               ],
+               courseId:3,
       },
       {
         chapter:[
                 {title:'食品安全基础知识1_章节4',time:'10:00',id:8,issee:false,},
-               ]
+               ],
+               courseId:4,
       }
     ]
   },
@@ -138,7 +141,10 @@ Page({
          return false; 
        }
     }
-    console.log('可以进入测试')
+    console.log('可以进入测试');
+    wx.navigateTo({
+      url: "/pages/exam/exam?courseid=" + e.target.dataset.courseid
+    })
   },
   tabExam(){
     for(var k in this.data.videLists){

@@ -25,6 +25,18 @@ Page({
       { url: '../../images/banner.jpg', text: '9xxxxxx培训', time: '2018年12月2日'  ,id:8},
       { url: '../../images/banner.jpg', text: '0xxxxxx培训', time: '2018年12月2日'  ,id:9},
       { url: '../../images/banner.jpg', text: '-xxxxxx培训', time: '2018年12月2日'  ,id:10},
+    ],
+    listagin:[
+      { url: '../../images/banner.jpg', text: '1xxxxxx培训',time:'2018年12月2日' ,id:1},
+      { url: '../../images/banner.jpg', text: '2xxxxxx培训',time:'2018年12月2日' ,id:2},
+      { url: '../../images/banner.jpg', text: '3xxxxxx培训', time: '2018年12月2日'  ,id:3},
+      { url: '../../images/banner.jpg', text: '5xxxxxx培训', time: '2018年12月2日'  ,id:4},
+      { url: '../../images/banner.jpg', text: '6xxxxxx培训', time: '2018年12月2日'  ,id:5},
+      { url: '../../images/banner.jpg', text: '7xxxxxx培训', time: '2018年12月2日'  ,id:6},
+      { url: '../../images/banner.jpg', text: '8xxxxxx培训', time: '2018年12月2日'  ,id:7},
+      { url: '../../images/banner.jpg', text: '9xxxxxx培训', time: '2018年12月2日'  ,id:8},
+      { url: '../../images/banner.jpg', text: '0xxxxxx培训', time: '2018年12月2日'  ,id:9},
+      { url: '../../images/banner.jpg', text: '-xxxxxx培训', time: '2018年12月2日'  ,id:10},
     ]
   },
 
@@ -116,13 +128,17 @@ Page({
       scrollTop: 0,
       currentpage:0,
     });
-    that.loadMore('');
+    that.loadMore('top');
     console.log("顶部");
   },
-  loadMore:function(){
-     console.log(1)
+  loadMore:function(temp){
      var that = this
-     var newdata = that.data.lists.concat(that.data.lists)
+     if(temp == 'top'){
+       var newdata = this.data.listagin;
+     }else{
+       var newdata = that.data.lists.concat(that.data.lists)
+     }
+     
      that.setData({
       lists:newdata,
       isLoadmore:false,

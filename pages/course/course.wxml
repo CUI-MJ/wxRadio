@@ -9,7 +9,7 @@
       </view>
       <view class="weui-panel" wx:for="{{lists}}" wx:for-index="index" wx:key="that">
             <view  class="weui-panel__bd" bindtap="gopage" data-id='{{item.id}}'>
-                <navigator url="/pages/details/details?id={{item.id}}" hover-class="none"> 
+                <navigator url="/pages/courselists/courselists?id={{item.id}}" hover-class="none"> 
                     <view class="weui-media-box weui-media-box_text" >
                         <!-- <view class="weui-media-box__title weui-media-box__title_in-text">标题一</view> -->
                         <view class="weui-media-box__desc">
