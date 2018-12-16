@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/reg/reg",
     "pages/index/index",
+    "pages/course/course",
+    "pages/reg/reg",
     "pages/courselists/courselists",
     "pages/exam/exam",
-    "pages/course/course",
     "pages/details/details",
     "pages/my/my",
     "pages/logs/logs"

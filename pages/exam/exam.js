@@ -1,5 +1,6 @@
 // pages/exam/exam.js
 var checkValue = [{ id: "1", value: "A" }];
+var network  = require('../../utils/network')
 Page({
 
   /**
@@ -51,6 +52,23 @@ Page({
       current:options.courseid
     });
     this.CountDown(15*60);
+    this.dataDisplay();
+    // 习题接口
+    let params = {
+      question_id:1
+    }
+    network.postRequest('/index.php?s=/api/train.index/getQuestioin',params,res=>{
+      console.log(res)
+    },err=>{
+      console.log(err)
+    })
+    //试卷接口
+    console.log('考试试卷')
+    network.postRequest('/index.php?s=/api/train.index/getExam',{},res=>{
+      console.log(res)
+    },err=>{
+      console.log(err)
+    })
   },
 
   /**
@@ -187,11 +205,25 @@ Page({
   //数据回显
   dataDisplay(){
      var that = this;
-     var storage = wx.getStorageSync('answerList')
+     var storage = wx.getStorageSync('answerList');
+     var newcheckdatas =  that.data.checkdata;
      storage.forEach((key,i)=>{
       if(key.id == that.data.current){
-        
+        key.answer.forEach((item)=>{
+          that.data.checkdata.forEach((datas,i)=>{
+              if(item.id == datas.checkid){
+                  datas.items.forEach((check,j)=>{
+                    if(check.name == item.value){
+                      newcheckdatas[i].items[j].checked = true;
+                    }
+                  })
+              }
+          })
+        })
       }
     })
+    that.setData({
+      checkdata: newcheckdatas,
+    });
   }
 })

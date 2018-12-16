@@ -1,17 +1,20 @@
-const appid = 'wx5412823b5e666a99';
-
+var network  = require('./utils/network')
+console.log(network)
 //app.js
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
     // 登录
     wx.login({
       success: res => {
-        console.log(res)
+        this.globalData.code = res.code;
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        // network.postRequest('/index.php?s=/api/train.index/getIndexContent',{code:res.code},res=>{
+        //   this.globalData.sessionKey = '121212121212';
+         
+        //   console.log(res)
+        // },err=>{
+        //   console.log(err)
+        // }) 
       }
     })
     // 获取用户信息
@@ -36,6 +39,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    appid:'wx92a3d222a4b07756',
+    secret:'bc7c6238ce1c729b5a5e614becce3afd'
   }
 })

@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+var network  = require('../../utils/network')
 Page({
   data: {
     motto: 'Hello World',
@@ -53,11 +53,27 @@ Page({
   },
   //获取授权信息
   getUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+    var that = this;
+    let params = {
+      code:app.globalData.code,
+      nickName:e.detail.userInfo.nickName,
+      avatarUrl:e.detail.userInfo.avatarUrl,
+      city:e.detail.userInfo.city,
+      province:e.detail.userInfo.province,
+      country:e.detail.userInfo.country,
+    }
+    network.postRequest('/index.php?s=/api/train.user/login',params,res=>{
+      console.log(res)
+      // app.globalData.userInfo = e.detail.userInfo
+      // that.setData({
+      //   userInfo: e.detail.userInfo,
+      //   hasUserInfo: true
+      // })
+      // wx.setStorageSync('userInfo', e.detail.userInfo)
+    },err=>{
+      console.log(err)
     })
-    wx.setStorageSync('userInfo', e.detail.userInfo)
+    
   }
 })
+

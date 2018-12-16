@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -13,7 +13,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
-	"appid": "wx5412823b5e666a99",
+	"appid": "wx065ccb0ff5d1ac3b",
 	"projectname": "wxRadio",
 	"debugOptions": {
 		"hidedInDevtools": []

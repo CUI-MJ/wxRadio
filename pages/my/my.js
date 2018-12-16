@@ -1,4 +1,4 @@
-
+var network  = require('../../utils/network')
 const app = getApp()
 // pages/my/my.js
 Page({
@@ -27,7 +27,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    // 个人中心接口
+    let params = {
+      //应该从全局拿
+      openid:'o_Qpd5YbrziQ6IfreLgypvxC7TDk'
+    }
+    network.postRequest('/index.php?s=/api/train.index/getMember',params,res=>{
+      console.log(res)
+    },err=>{
+      console.log(err)
+    })
   },
 
   /**

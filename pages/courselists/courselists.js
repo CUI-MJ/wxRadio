@@ -1,4 +1,5 @@
 // pages/courselists/courselists.js
+var network  = require('../../utils/network')
 Page({
 
   /**
@@ -43,7 +44,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let params = {
+      train_id:1
+    }
+    network.postRequest('/index.php?s=/api/train.index/getTrainDetail',params,res=>{
+      console.log(res)
+    },err=>{
+      console.log(err)
+    })
   },
 
   /**
@@ -101,7 +109,11 @@ Page({
     var two = msg.split('-')[1];
     var target = this.data.videLists[one].chapter[two];
     if(target.issee){
-      console.log('视频已经看完')
+      wx.showToast({
+        title: '视频已看完',
+        icon: 'none',
+        duration: 2000
+      })
     }
     else{
       if(one == 0&&two == 0){
@@ -109,23 +121,37 @@ Page({
       }
       if(two == 0){
         if(this.data.videLists[one-1].chapter[this.data.videLists[one-1].chapter.length-1].issee){
-          console.log('视频可以观看')
+          wx.navigateTo({
+            url: "/pages/details/details?courseid=" + e.target.dataset.courseid
+          })
         }else{
-          console.log('有视频未看完')
+          wx.showToast({
+            title: '请按顺序观看视频',
+            icon: 'none',
+            duration: 2000
+          })
         }
       }else{
         if(one == 0){
           if(this.data.videLists[one].chapter[two-1].issee){
             console.log('视频可以观看')
           }else{
-            console.log('有视频未看完')
+            wx.showToast({
+              title: '请按顺序观看视频',
+              icon: 'none',
+              duration: 2000
+            })
           }
         }
         else{
           if(this.data.videLists[one-1].chapter[two-1].issee){
             console.log('视频可以观看')
           }else{
-            console.log('有视频未看完')
+            wx.showToast({
+              title: '请按顺序观看视频',
+              icon: 'none',
+              duration: 2000
+            })
           }
         }
       }  
@@ -137,7 +163,11 @@ Page({
     var targetChapter = this.data.videLists[number].chapter
     for(var k in targetChapter){
        if(!targetChapter[k].issee){
-         console.log('有未看完的视频')
+          wx.showToast({
+            title: '有未观看的视频',
+            icon: 'none',
+            duration: 2000
+          })
          return false; 
        }
     }
@@ -150,7 +180,11 @@ Page({
     for(var k in this.data.videLists){
       for(var j in this.data.videLists[k].chapter){
         if(!this.data.videLists[k].chapter[j].issee){
-          console.log('有习题未完成')
+          wx.showToast({
+            title: '有未完成的习题',
+            icon: 'none',
+            duration: 2000
+          })
           return false;
         }
         

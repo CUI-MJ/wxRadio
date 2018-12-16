@@ -1,5 +1,7 @@
 // pages/course/course.js
 var page = 0;
+var network  = require('../../utils/network')
+const app = getApp()
 Page({
 
   /**
@@ -45,6 +47,17 @@ Page({
    */
   onLoad: function (options) {
       this.getscrollHeight();
+      let params = {
+        code:app.globalData.code
+      }
+      network.postRequest('/index.php?s=/api/train.index/getIndexContent',params,res=>{
+          if(res.code == 1){
+            //
+          }
+          console.log(res)
+      },err=>{
+          console.log(err)
+      }) 
   },
 
   /**
@@ -157,5 +170,6 @@ Page({
   },
   gopage:function(event){
     console.log(event)
-  }
+  },
+  
 })
