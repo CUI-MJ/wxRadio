@@ -80,11 +80,14 @@ Page({
       code:app.globalData.code
     }
     network.postRequest('/index.php?s=/api/train.index/getIndexContent',params,res=>{
+        var newdata = res.data.trainning;
+        for(var key of  newdata){
+          key.create_time = key.create_time.split(' ')[0]
+        }
         if(res.code == 1){
-          var data = [res.data.trainning]
           that.setData({
             bannerUrl:res.data.banner,
-            lists:data,
+            lists:newdata,
             isLoadmore:false,
           })
         }else{

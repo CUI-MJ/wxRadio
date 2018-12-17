@@ -59,3 +59,7 @@
     height: 2rem;
     align-items: center;
   }
+  .detail_text{
+      height:40px;
+      line-height: 40px;
+  }

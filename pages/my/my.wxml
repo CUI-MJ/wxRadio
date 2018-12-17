@@ -19,7 +19,7 @@
 					<view class="weui-label">公司全称</view>
 				</view>
 				<view class="weui-cell__bd">
-				    <view class="weui-label">{{compony}}</view>
+				    <view class="detail_text">{{compony}}</view>
 					 
 				</view>
 			</view>
@@ -28,7 +28,7 @@
 					<view class="weui-label">姓名</view>
 				</view>
 				<view class="weui-cell__bd">
-				    <view class="weui-label">{{userName}}</view>
+				    <view class="detail_text">{{userName}}</view>
 					
 				</view>
 			</view>
@@ -37,7 +37,7 @@
 					<view class="weui-label">姓名</view>
 				</view>
 				<view class="weui-cell__bd">
-				    <view class="weui-label">{{mobile}}</view>
+				    <view class="detail_text">{{mobile}}</view>
 				</view>
 			</view>
 		</view>

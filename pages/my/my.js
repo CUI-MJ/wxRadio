@@ -92,12 +92,17 @@ Page({
       openid:'o_Qpd5YbrziQ6IfreLgypvxC7TDk'
     }
     network.postRequest('/index.php?s=/api/train.index/getMember',params,res=>{
+      var newlist = res.data.list;
+      for(var key of newlist){
+         key.create_time = key.create_time.split(' ')[0]
+      }
+      console.log(newlist)
       if(res.code == 1){
         this.setData({
           userName:res.data.user.nickName,
-          compony:'',
+          compony:'百度',
           mobile:res.data.user.mobile,
-          listData:res.data.list
+          listData:newlist
         })
       }else{
 

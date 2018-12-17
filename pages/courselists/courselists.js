@@ -128,17 +128,17 @@ Page({
     var hasExercises = false;
     if(btnid == 0){
       hasExercises = true;
-      return that.goExam(question_id, this.data.videLists[btnid].question.answer)
+      return that.goExam(question_id)
     }else{
       if(storage  == ''){
         that.ShowModal('有视频未观看或习题未作答')
       }
       else{
-        console.log( this.data.videLists[btnid-1])
+        console.log( this.data.videLists[btnid])
         storage.some(element => {
           if(element.id == this.data.videLists[btnid-1].question_id){
             hasExercises = true;
-            return that.goExam(question_id, this.data.videLists[btnid].question.answer)
+            return that.goExam(question_id)
           }
         });    
       }
