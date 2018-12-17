@@ -19,13 +19,8 @@
 					<view class="weui-label">公司全称</view>
 				</view>
 				<view class="weui-cell__bd">
-					<input
-					 class="weui-input"
-					 placeholder="请输入公司名称"
-					 value="{{compony}}"
-					 bindinput="bindKeyInput"
-					 data-name='compony'
-					/>
+				    <view class="weui-label">{{compony}}</view>
+					 
 				</view>
 			</view>
 			<view class="weui-cell weui-cell_input">
@@ -33,31 +28,16 @@
 					<view class="weui-label">姓名</view>
 				</view>
 				<view class="weui-cell__bd">
-					<input
-					 class="weui-input"
-					 placeholder="请输入姓名"
-					 value="{{userName}}"
-					 data-name='userName'
-					 bindinput="bindKeyInput"
-					/>
+				    <view class="weui-label">{{userName}}</view>
+					
 				</view>
 			</view>
-			<view class="weui-cell weui-cell_input weui-cell_vcode">
+			<view class="weui-cell weui-cell_input">
 				<view class="weui-cell__hd">
-					<view class="weui-label">手机号</view>
+					<view class="weui-label">姓名</view>
 				</view>
-				<!--<view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入手机号" />
-                </view>-->
-				<view class="weui-cell__ft">
-					<button
-					 class="weui-vcode-btn"
-					 wx:if="{{!hasPhoneNumber && canIUse}}"
-					 open-type="getPhoneNumber"
-					 open-type="getPhoneNumber"
-					 bindgetphonenumber="getPhoneNumber"
-					>点击授权获取手机号
-					</button>
+				<view class="weui-cell__bd">
+				    <view class="weui-label">{{mobile}}</view>
 				</view>
 			</view>
 		</view>
@@ -69,14 +49,14 @@
 			</view>
 			<block wx:for="{{listData}}" wx:key="{{code}}">
 				<view class="tr bg-g" wx:if="{{index % 2 == 0}}">
-					<view class="td">{{item.code}}</view>
-					<view class="td">{{item.text}}</view>
-					<view class="td">{{item.type}}</view>
+					<view class="td">{{item.exam_name}}</view>
+					<view class="td">{{item.create_time}}</view>
+					<view class="td">{{item.score}}</view>
 				</view>
 				<view class="tr" wx:else>
-					<view class="td">{{item.code}}</view>
-					<view class="td">{{item.text}}</view>
-					<view class="td">{{item.type}}</view>
+					<view class="td">{{item.exam_name}}</view>
+					<view class="td">{{item.create_time}}</view>
+					<view class="td">{{item.score}}</view>
 				</view>
 			</block>
 		</view>

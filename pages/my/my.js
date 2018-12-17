@@ -12,15 +12,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getPhoneNumber'),
     userName:'张三',
     compony:'百度',
-    listData:[
-      {"code":"01","text":"text1","type":"type1"},
-      {"code":"02","text":"text2","type":"type2"},
-      {"code":"03","text":"text3","type":"type3"},
-      {"code":"04","text":"text4","type":"type4"},
-      {"code":"05","text":"text5","type":"type5"},
-      {"code":"06","text":"text6","type":"type6"},
-      {"code":"07","text":"text7","type":"type7"}
-    ]
+    listData:[]
   },
 
   /**
@@ -28,15 +20,7 @@ Page({
    */
   onLoad: function (options) {
     // 个人中心接口
-    let params = {
-      //应该从全局拿
-      openid:'o_Qpd5YbrziQ6IfreLgypvxC7TDk'
-    }
-    network.postRequest('/index.php?s=/api/train.index/getMember',params,res=>{
-      console.log(res)
-    },err=>{
-      console.log(err)
-    })
+    this.getMember();
   },
 
   /**
@@ -102,4 +86,24 @@ Page({
       [e.target.dataset.name]: e.detail.value
     })
   },
+  getMember(){
+    let params = {
+      //应该从全局拿
+      openid:'o_Qpd5YbrziQ6IfreLgypvxC7TDk'
+    }
+    network.postRequest('/index.php?s=/api/train.index/getMember',params,res=>{
+      if(res.code == 1){
+        this.setData({
+          userName:res.data.user.nickName,
+          compony:'',
+          mobile:res.data.user.mobile,
+          listData:res.data.list
+        })
+      }else{
+
+      }
+    },err=>{
+      console.log(err)
+    })
+  }
 })

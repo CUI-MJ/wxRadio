@@ -15,49 +15,15 @@ Page({
     isNodata:false,
     totalPage:2,
     currentpage:1,
-    list:[],
-    lists:[
-      { url: '../../images/banner.jpg', text: '1xxxxxx培训',time:'2018年12月2日' ,id:1},
-      { url: '../../images/banner.jpg', text: '2xxxxxx培训',time:'2018年12月2日' ,id:2},
-      { url: '../../images/banner.jpg', text: '3xxxxxx培训', time: '2018年12月2日'  ,id:3},
-      { url: '../../images/banner.jpg', text: '5xxxxxx培训', time: '2018年12月2日'  ,id:4},
-      { url: '../../images/banner.jpg', text: '6xxxxxx培训', time: '2018年12月2日'  ,id:5},
-      { url: '../../images/banner.jpg', text: '7xxxxxx培训', time: '2018年12月2日'  ,id:6},
-      { url: '../../images/banner.jpg', text: '8xxxxxx培训', time: '2018年12月2日'  ,id:7},
-      { url: '../../images/banner.jpg', text: '9xxxxxx培训', time: '2018年12月2日'  ,id:8},
-      { url: '../../images/banner.jpg', text: '0xxxxxx培训', time: '2018年12月2日'  ,id:9},
-      { url: '../../images/banner.jpg', text: '-xxxxxx培训', time: '2018年12月2日'  ,id:10},
-    ],
-    listagin:[
-      { url: '../../images/banner.jpg', text: '1xxxxxx培训',time:'2018年12月2日' ,id:1},
-      { url: '../../images/banner.jpg', text: '2xxxxxx培训',time:'2018年12月2日' ,id:2},
-      { url: '../../images/banner.jpg', text: '3xxxxxx培训', time: '2018年12月2日'  ,id:3},
-      { url: '../../images/banner.jpg', text: '5xxxxxx培训', time: '2018年12月2日'  ,id:4},
-      { url: '../../images/banner.jpg', text: '6xxxxxx培训', time: '2018年12月2日'  ,id:5},
-      { url: '../../images/banner.jpg', text: '7xxxxxx培训', time: '2018年12月2日'  ,id:6},
-      { url: '../../images/banner.jpg', text: '8xxxxxx培训', time: '2018年12月2日'  ,id:7},
-      { url: '../../images/banner.jpg', text: '9xxxxxx培训', time: '2018年12月2日'  ,id:8},
-      { url: '../../images/banner.jpg', text: '0xxxxxx培训', time: '2018年12月2日'  ,id:9},
-      { url: '../../images/banner.jpg', text: '-xxxxxx培训', time: '2018年12月2日'  ,id:10},
-    ]
+    lists:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      this.getscrollHeight();
-      let params = {
-        code:app.globalData.code
-      }
-      network.postRequest('/index.php?s=/api/train.index/getIndexContent',params,res=>{
-          if(res.code == 1){
-            //
-          }
-          console.log(res)
-      },err=>{
-          console.log(err)
-      }) 
+     // this.getscrollHeight();
+     this.getCourse()
   },
 
   /**
@@ -108,7 +74,34 @@ Page({
   onShareAppMessage: function () {
 
   },
-
+  getCourse:function(){
+    var that = this;
+    let params = {
+      code:app.globalData.code
+    }
+    network.postRequest('/index.php?s=/api/train.index/getIndexContent',params,res=>{
+        if(res.code == 1){
+          var data = [res.data.trainning]
+          that.setData({
+            bannerUrl:res.data.banner,
+            lists:data,
+            isLoadmore:false,
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+    },err=>{
+       wx.showToast({
+        title:'网络错误请稍后再试',
+        icon: 'none',
+        duration: 2000
+      })
+    }) 
+  },
   bindDownLoad: function (event) {
     var that = this;
     if(!(that.data.currentpage<that.data.totalPage)){
@@ -142,7 +135,6 @@ Page({
       currentpage:0,
     });
     that.loadMore('top');
-    console.log("顶部");
   },
   loadMore:function(temp){
      var that = this

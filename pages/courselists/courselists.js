@@ -8,50 +8,14 @@ Page({
   data: {
     icon:'../../images/video01.png',
     checkicon:'../../images/video02.png',
-    videLists:[
-      {
-        chapter:[
-                {title:'《我国食品安全标准解读_解读》3_章节1',time:'10:00',id:1,issee:true,},
-                {title:'《我国食品安全标准解读_解读》3_章节2',time:'10:00',id:2,issee:true,},
-                {title:'《我国食品安全标准解读_解读》3_章节3',time:'10:00',id:3,issee:true,},
-                {title:'《我国食品安全标准解读_解读》3_章节4',time:'10:00',id:4,issee:true,},
-               ],
-               courseId:1,
-      },
-      {
-        chapter:[
-                {title:'食品安全基础知识1_章节1',time:'10:00',id:5,issee:false,},
-               ],
-               courseId:2,
-      },
-      {
-        chapter:[
-                {title:'食品安全基础知识1_章节2',time:'10:00',id:6,issee:false,},
-                {title:'食品安全基础知识1_章节3',time:'10:00',id:7,issee:false,},
-               ],
-               courseId:3,
-      },
-      {
-        chapter:[
-                {title:'食品安全基础知识1_章节4',time:'10:00',id:8,issee:false,},
-               ],
-               courseId:4,
-      }
-    ]
+    videLists:[ ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let params = {
-      train_id:1
-    }
-    network.postRequest('/index.php?s=/api/train.index/getTrainDetail',params,res=>{
-      console.log(res)
-    },err=>{
-      console.log(err)
-    })
+    this.getTrainDetail(options.id)
   },
 
   /**
@@ -102,93 +66,126 @@ Page({
   onShareAppMessage: function () {
 
   },
-  //检测视频可不可以观看
-  tapVideo(e){
-    var msg = e.target.dataset.id
-    var one = msg.split('-')[0];
-    var two = msg.split('-')[1];
-    var target = this.data.videLists[one].chapter[two];
-    if(target.issee){
+  //获取视频列表详情
+  getTrainDetail(train_id){
+    let that = this;
+    let params = {
+      train_id:1
+    }
+    network.postRequest('/index.php?s=/api/train.index/getTrainDetail',params,res=>{
+      if(res.code == 1){
+        that.setData({
+          videLists:res.data.content,
+        })
+      }else{
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    },err=>{
       wx.showToast({
-        title: '视频已看完',
+        title:'网络错误请稍后再试',
         icon: 'none',
         duration: 2000
       })
-    }
-    else{
-      if(one == 0&&two == 0){
-        return console.log('视频可以观看')
+    })
+  },
+  //检测视频可不可以观看
+  tapVideo(e){
+    var that = this;
+    var storage = wx.getStorageSync('answerList') 
+    var msg = e.target.dataset.id;
+    var hasVideo = false;
+    if(msg == 0){
+      hasVideo = true;
+      return that.godetails(this.data.videLists[msg].video_url)
+    }else{
+      if(storage  == ''){
+       return that.ShowModal('有视频未观看或习题未作答')
       }
-      if(two == 0){
-        if(this.data.videLists[one-1].chapter[this.data.videLists[one-1].chapter.length-1].issee){
-          wx.navigateTo({
-            url: "/pages/details/details?courseid=" + e.target.dataset.courseid
-          })
-        }else{
-          wx.showToast({
-            title: '请按顺序观看视频',
-            icon: 'none',
-            duration: 2000
-          })
-        }
-      }else{
-        if(one == 0){
-          if(this.data.videLists[one].chapter[two-1].issee){
-            console.log('视频可以观看')
-          }else{
-            wx.showToast({
-              title: '请按顺序观看视频',
-              icon: 'none',
-              duration: 2000
-            })
+      else{
+        storage.some(element => {
+          if(element.id == this.data.videLists[msg-1].question_id){
+            hasVideo = true
+            return that.godetails(this.data.videLists[msg].video_url)
           }
-        }
-        else{
-          if(this.data.videLists[one-1].chapter[two-1].issee){
-            console.log('视频可以观看')
-          }else{
-            wx.showToast({
-              title: '请按顺序观看视频',
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        }
-      }  
+        });
+        
+      }
+    }
+    if(!hasVideo){
+      that.ShowModal('有视频未观看或习题未作答')
     }
   },
   //检测习题可不可以进入
   tabExercises(e){
-    var number =  e.target.dataset.btnid;
-    var targetChapter = this.data.videLists[number].chapter
-    for(var k in targetChapter){
-       if(!targetChapter[k].issee){
-          wx.showToast({
-            title: '有未观看的视频',
-            icon: 'none',
-            duration: 2000
-          })
-         return false; 
-       }
-    }
-    console.log('可以进入测试');
-    wx.navigateTo({
-      url: "/pages/exam/exam?courseid=" + e.target.dataset.courseid
-    })
-  },
-  tabExam(){
-    for(var k in this.data.videLists){
-      for(var j in this.data.videLists[k].chapter){
-        if(!this.data.videLists[k].chapter[j].issee){
-          wx.showToast({
-            title: '有未完成的习题',
-            icon: 'none',
-            duration: 2000
-          })
-          return false;
-        }
-        
+    var that = this;
+    var storage = wx.getStorageSync('answerList') 
+    var btnid = e.target.dataset.btnid
+    var question_id = this.data.videLists[btnid].question_id;
+    var hasExercises = false;
+    if(btnid == 0){
+      hasExercises = true;
+      return that.goExam(question_id, this.data.videLists[btnid].question.answer)
+    }else{
+      if(storage  == ''){
+        that.ShowModal('有视频未观看或习题未作答')
+      }
+      else{
+        console.log( this.data.videLists[btnid-1])
+        storage.some(element => {
+          if(element.id == this.data.videLists[btnid-1].question_id){
+            hasExercises = true;
+            return that.goExam(question_id, this.data.videLists[btnid].question.answer)
+          }
+        });    
       }
     }
+   if(!hasExercises){
+     that.ShowModal('有视频未观看或习题未作答')
+   }
+  },
+  tabExam(){
+    var that = this;
+    var storage = wx.getStorageSync('answerList') 
+    var videLists = that.data.videLists;
+    var totalExam = []
+    if(storage  == ''){
+      return that.ShowModal('有视频未观看或习题未作答')
+    }
+    else{
+      storage.forEach(skey => {
+        videLists.forEach(vkey => {
+          if(skey.id == vkey.question_id){
+            totalExam.push(vkey)
+          }
+        })
+      })
+      if(videLists.length == totalExam.length){
+        console.log('可以去考试')
+      }else{
+        return that.ShowModal('有视频未观看或习题未作答')
+      }
+    }
+   
+  },
+  ShowModal(content){
+    wx.showModal({
+      title: '提示',
+      showCancel: false,
+      content: content,
+    })
+  },
+  godetails(video_url){
+    wx.navigateTo({
+      url: "/pages/details/details?video_url=" + video_url
+    })
+  },
+  goExam(question_id,answer){
+    wx.navigateTo({
+        url: "/pages/exam/exam?question_id=" + question_id + '&&answer=' + answer 
+    })
   }
 })
