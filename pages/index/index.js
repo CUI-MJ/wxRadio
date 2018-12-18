@@ -33,7 +33,6 @@ Page({
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
-        console.log(res)
         if (wx.getStorageSync('userInfo') && (wx.getStorageSync('isReg') == 1) && wx.getStorageSync('token')) {
           wx.switchTab({
             url: "/pages/course/course", // 如果本地缓存有信息证明登陆过

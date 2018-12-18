@@ -1,5 +1,4 @@
 // pages/exam/exam.js
-var checkValue = [];
 var network = require('../../utils/network')
 Page({
 
@@ -13,29 +12,24 @@ Page({
     current: '',
     isHasTime: false,
     newdata: [],
+    isSetStorage:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
     var that = this;
     if (options) {
       this.setData({
         current: options.question_id,
+        answer:options.answer
       });
       that.getQuestioin(options.question_id)
     }
 
 
-    // //试卷接口
-    // console.log('考试试卷')
-    // network.postRequest('/index.php?s=/api/train.index/getExam',{},res=>{
-    //   console.log(res)
-    // },err=>{
-    //   console.log(err)
-    // })
+
   },
 
   /**
@@ -116,14 +110,34 @@ Page({
 
       }
     }, err => {
-      console.log(err)
     })
   },
   // 点击表单提交
   submit: function () {
     var that = this;
-    var storage = wx.getStorageSync('answerList')
-    //先提交后台成功再存缓存
+    var storage = wx.getStorageSync('answerList');
+    var data = ''
+    if(that.data.newdata.length == 0){
+      data = that.data.checkdata
+    }else{
+      data = that.data.newdata
+    }
+    for(var key of data[0].items){
+      if(key.checked && key.name == that.data.answer ){
+          this.setData({
+            isSetStorage: true,
+          });
+        }
+    }
+    if(!that.data.isSetStorage){
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content:'回答错误,请从新作答',
+      })
+      return false
+    }
+    //先校验答案是否正确再存缓存
     if (storage && storage.length > 0) {
       storage.some((sKey,sNum)=>{
         that.data.newdata.forEach((nKey)=>{
@@ -153,11 +167,9 @@ Page({
   // 点击单选框
   radioChange(e) {
     var that = this;
-    console.log(e.detail.value)
     var newdata = that.data.checkdata;
     var ID = e.detail.value.split(',')[0];
     var name = e.detail.value.split(',')[1];
-    console.log(ID,name)
     that.data.checkdata.forEach((item, position) => {
       if (item.id == ID) {
         newdata[position].items.forEach((value) => {
@@ -172,63 +184,21 @@ Page({
     this.setData({
       newdata: newdata
     });
-    console.log(that.data.newdata)
-  },
-  //倒计时
-  CountDown(totalSecond) {
-    var interval = setInterval(function () {
-      // 秒数
-      var second = totalSecond;
-      // 天数位
-      var day = Math.floor(second / 3600 / 24);
-      var dayStr = day.toString();
-      if (dayStr.length == 1) dayStr = '0' + dayStr;
-      // 小时位
-      var hr = Math.floor((second - day * 3600 * 24) / 3600);
-      var hrStr = hr.toString();
-      if (hrStr.length == 1) hrStr = '0' + hrStr;
-      // 分钟位
-      var min = Math.floor((second - day * 3600 * 24 - hr * 3600) / 60);
-      var minStr = min.toString();
-      if (minStr.length == 1) minStr = '0' + minStr;
-      // 秒位
-      var sec = second - day * 3600 * 24 - hr * 3600 - min * 60;
-      var secStr = sec.toString();
-      if (secStr.length == 1) secStr = '0' + secStr;
-      this.setData({
-        countDownDay: dayStr,
-        countDownHour: hrStr,
-        countDownMinute: minStr,
-        countDownSecond: secStr,
-      });
-      totalSecond--;
-      if (totalSecond < 0) {
-        clearInterval(interval);
-        this.submit();
-        wx.showToast({
-          title: '考试结束',
-        });
-        this.setData({
-          countDownDay: '00',
-          countDownHour: '00',
-          countDownMinute: '00',
-          countDownSecond: '00',
-        });
-      }
-    }.bind(this), 1000);
   },
   //数据回显
   dataDisplay() {
     var that = this;
     var storage = wx.getStorageSync('answerList');
     var newcheckdatas = that.data.checkdata;
-    storage.forEach((skey) => {
-      newcheckdatas.forEach((nkey,nNum)=>{
-        if(skey.id == nkey.id){
-          newcheckdatas[nNum] = skey
-        }
+    if(storage){
+      storage.forEach((skey) => {
+        newcheckdatas.forEach((nkey,nNum)=>{
+          if(skey.id == nkey.id){
+            newcheckdatas[nNum] = skey
+          }
+        })
       })
-    })
+    }
     that.setData({
       checkdata: newcheckdatas,
     });

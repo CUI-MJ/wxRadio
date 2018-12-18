@@ -70,7 +70,7 @@ Page({
   getTrainDetail(train_id){
     let that = this;
     let params = {
-      train_id:1
+      train_id:train_id
     }
     network.postRequest('/index.php?s=/api/train.index/getTrainDetail',params,res=>{
       if(res.code == 1){
@@ -125,20 +125,20 @@ Page({
     var storage = wx.getStorageSync('answerList') 
     var btnid = e.target.dataset.btnid
     var question_id = this.data.videLists[btnid].question_id;
+    var answer = this.data.videLists[btnid].question.answer;
     var hasExercises = false;
     if(btnid == 0){
       hasExercises = true;
-      return that.goExam(question_id)
+      return that.goExam(question_id,answer)
     }else{
       if(storage  == ''){
         that.ShowModal('有视频未观看或习题未作答')
       }
       else{
-        console.log( this.data.videLists[btnid])
         storage.some(element => {
           if(element.id == this.data.videLists[btnid-1].question_id){
             hasExercises = true;
-            return that.goExam(question_id)
+            return that.goExam(question_id,answer)
           }
         });    
       }
@@ -164,7 +164,7 @@ Page({
         })
       })
       if(videLists.length == totalExam.length){
-        console.log('可以去考试')
+        return that.goRealExam()
       }else{
         return that.ShowModal('有视频未观看或习题未作答')
       }
@@ -186,6 +186,11 @@ Page({
   goExam(question_id,answer){
     wx.navigateTo({
         url: "/pages/exam/exam?question_id=" + question_id + '&&answer=' + answer 
+    })
+  },
+  goRealExam(){
+    wx.navigateTo({
+        url: "/pages/realExam/realExam"
     })
   }
 })

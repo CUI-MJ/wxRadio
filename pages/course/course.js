@@ -58,14 +58,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log(1111111111111)
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log("lower");
   },
 
   /**
@@ -112,7 +110,6 @@ Page({
         isLoadmore:false,
         isNodata:true,
       });
-      console.log(that.data)
     }else{
       var number = that.data.currentpage+1;
       that.setData({
@@ -129,7 +126,6 @@ Page({
     });
   },
   topLoad: function (event) {
-    console.log(event)
     var that = this;
     //该方法绑定了页面滑动到顶部的事件，然后做上拉刷新
     this.setData({
@@ -164,7 +160,6 @@ Page({
     });
   },
   gopage:function(event){
-    console.log(event)
   },
   
 })

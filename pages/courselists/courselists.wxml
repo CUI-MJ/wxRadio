@@ -12,7 +12,7 @@
         </view>
         <view class="line">  
         </view>
-        <button class="weui-btn btn" type="default" data-btnid="{{idx}}"  data-courseid="{{itemName.question_id}}"bindtap="tabExercises">进入习题</button>
+        <button class="weui-btn btn" type="default" data-btnid="{{idx}}"  data-courseid="{{itemName.question_id}},{{itemName.question.answer}}" bindtap="tabExercises">进入习题</button>
     </view>
     <button class="weui-btn submit mt20" type="primary" bindtap="tabExam">进入测试</button>
 </view>

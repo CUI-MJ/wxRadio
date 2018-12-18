@@ -12,14 +12,9 @@ Page({
 
   },
   onLoad: function () {
-    console.log('进入页面')
-    console.log(app.globalData)
   },
   getPhoneNumber(e) {
     var that = this;
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
     let params = {
       encryptedData: e.detail.encryptedData ? e.detail.encryptedData : '',
       iv: e.detail.iv ? e.detail.iv : '',
@@ -43,7 +38,7 @@ Page({
         if (res.code == 1) {
           that.setData({
             hasPhoneNumber: true,
-            telPhone: res.data.telPhone
+            telPhone: res.data.phoneNumber
           })
         } else {
           wx.showModal({
@@ -53,7 +48,6 @@ Page({
           })
         }
       }, err => {
-        console.log(err)
       })
     }
   },
@@ -90,6 +84,7 @@ Page({
       appid:app.globalData.appid
     }
     network.postRequest('/index.php?s=api/train.user/regInfo', params, res => {
+      wx.setStorageSync('isReg',1)
       if(res.code == 1){
         wx.switchTab({
           url: '/pages/course/course'
