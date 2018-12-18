@@ -35,7 +35,7 @@ App({
   },
   globalData: {
     userInfo:'',
-    appid:'wx92a3d222a4b07756',
+    appid:'wx065ccb0ff5d1ac3b',
     secret:'bc7c6238ce1c729b5a5e614becce3afd',
     code:'',
   }

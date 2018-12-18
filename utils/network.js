@@ -21,7 +21,7 @@ function postRequestLoading(url, params, message, success, fail) {
     }
     const postRequestTask = wx.request({
         url: host+url,
-        data: Object.assign({appid:'wx92a3d222a4b07756',wxapp_id:10002}, params),
+        data: Object.assign({appid:'wx065ccb0ff5d1ac3b',wxapp_id:10002}, params),
         header: {
             'Content-Type': 'application/json'
         },
