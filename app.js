@@ -7,14 +7,9 @@ App({
     wx.login({
       success: res => {
         this.globalData.code = res.code;
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        // network.postRequest('/index.php?s=/api/train.index/getIndexContent',{code:res.code},res=>{
-        //   this.globalData.sessionKey = '121212121212';
-         
-        //   console.log(res)
-        // },err=>{
-        //   console.log(err)
-        // }) 
+        if (this.codeIdCallback){
+          this.codeCallback(res);
+        }
       }
     })
     // 获取用户信息
@@ -39,8 +34,9 @@ App({
     })
   },
   globalData: {
-    userInfo: null,
+    userInfo:'',
     appid:'wx92a3d222a4b07756',
-    secret:'bc7c6238ce1c729b5a5e614becce3afd'
+    secret:'bc7c6238ce1c729b5a5e614becce3afd',
+    code:'',
   }
 })

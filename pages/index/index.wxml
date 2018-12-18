@@ -4,7 +4,7 @@
   <text class="con-infotext">欢迎来到希格玛培训小程序</text>
   <view class="userinfo">
     
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="btninfo"> 使用微信登录 </button>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getLogin" class="btninfo"> 使用微信登录 </button>
      <image src='../../images/wx.png' class="wxPng" wx:if="{{!hasUserInfo && canIUse}}"></image>
      <block wx:else class="info-desc">
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>

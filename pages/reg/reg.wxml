@@ -13,9 +13,9 @@
 					<input
 					 class="weui-input"
 					 placeholder="请输入公司名称"
-					 value="{{compony}}"
+					 value="{{company}}"
 					 bindinput="bindKeyInput"
-					 data-name='compony'
+					 data-name='company'
 					/>
 				</view>
 			</view>
