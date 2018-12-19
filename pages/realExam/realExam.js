@@ -12,7 +12,8 @@ Page({
     title:'',
     newdata:'',
     isHasTime:false,
-    examId:''
+    examId:'',
+    time_num:'',
   },
 
   /**
@@ -99,7 +100,7 @@ Page({
       totalSecond--;
       if (totalSecond < 0) {
         clearInterval(interval);
-        this.submit();
+        this.saveExam();
         wx.showToast({
           title: '考试结束',
         });
@@ -122,6 +123,7 @@ Page({
           checkdata:this.formatData(res.data.content.questions),
           isHasTime:true,
           examId:res.data.content.exam.id,
+          time_num:res.data.content.exam.time_num,
         })
       }else{
         that.ShowModal(res.msg)
@@ -169,7 +171,12 @@ Page({
     });
   },
   saveExam(){
+    var that = this;
     var selectData = [];
+    if(this.data.newdata.length == 0 || !this.data.newdata){
+       that.ShowModal('请您作答试题')
+       return false;
+    }
     this.data.newdata.forEach((key)=>{
       var obj = {}
       obj.title = key.title;
@@ -181,8 +188,11 @@ Page({
         }
       }
     })
+    var totalTime = this.data.time_num*60 - ((this.data.countDownMinute * 60 ) + Number(this.data.countDownSecond) )
     let params = {
       id: this.data.examId,
+      token:wx.getStorageSync('token'),
+      total_time:totalTime,
       answer: selectData
     }
     network.postRequest('/index.php?s=/api/train.index/saveExam',params,res=>{
