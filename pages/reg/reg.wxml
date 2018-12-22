@@ -1,9 +1,10 @@
 <view class="container user-reg page">
+
 	<view class="page__hd">
 		<view class="page__title">用户注册</view>
 		<view class="page__desc">此系统为实名验证，需要后台审核，请填写真实的公司全称，提交后不可修改</view>
 	</view>
-	<view class="page__bd">
+	<view class="page__bd" wx:if="{{!isshowText}}">
 		<view class="weui-cells weui-cells_after-title">
 			<view class="weui-cell weui-cell_input">
 				<view class="weui-cell__hd">
@@ -61,7 +62,10 @@
 		</view>
 
 	</view>
-	<view class="page__bd pagelast">
+	<view class="page__bd pagelast" wx:if="{{isshowText}}">
+		您已经提交注册申请，请耐心等待。
+	</view>
+	<view class="page__bd pagelast" wx:if="{{!isshowText}}">
 		<button
 		 class="weui-btn mini-btn"
 		 type="primary"

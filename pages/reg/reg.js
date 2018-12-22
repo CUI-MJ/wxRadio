@@ -9,9 +9,15 @@ Page({
     company: '',
     userName: '',
     telPhone: '',
+    isshowText:false
 
   },
   onLoad: function () {
+    if(wx.getStorageSync('isReg') == 1){
+      this.setData({
+        isshowText: true
+      })
+    }
   },
   getPhoneNumber(e) {
     var that = this;

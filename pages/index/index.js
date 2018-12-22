@@ -11,12 +11,12 @@ Page({
   },
   //事件处理函数
   bindViewTap: function () {
-    if (this.data.isReg == 0) {
+    if (this.data.audit_status == 1) {
       wx.navigateTo({
         url: '../reg/reg'
       })
     }
-    if (this.data.isReg == 1) {
+    if (this.data.audit_status == 2) {
       wx.switchTab({
         url: "/pages/course/course", // 如果本地缓存有信息证明登陆过
       })
@@ -81,11 +81,13 @@ Page({
         that.setData({
           userInfo: e.detail.userInfo,
           hasUserInfo: true,
-          isReg: res.data.is_reg
+          isReg: res.data.is_reg,
+          audit_status:res.data.audit_status,
         })
         wx.setStorageSync('userInfo', e.detail.userInfo)
         wx.setStorageSync('token', res.data.token)
         wx.setStorageSync('isReg', res.data.is_reg)
+        wx.setStorageSync('auditStatus', res.data.audit_status,)
       } else {
         wx.showToast({
           title: res.data.msg,

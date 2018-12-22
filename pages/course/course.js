@@ -15,6 +15,7 @@ Page({
     isNodata:false,
     totalPage:2,
     currentpage:1,
+    materials:[],
     lists:[]
   },
 
@@ -79,7 +80,11 @@ Page({
     }
     network.postRequest('/index.php?s=/api/train.index/getIndexContent',params,res=>{
         var newdata = res.data.trainning;
+        var newmaterials = res.data.study_materials
         for(var key of  newdata){
+          key.create_time = key.create_time.split(' ')[0]
+        }
+        for(var key of  newmaterials){
           key.create_time = key.create_time.split(' ')[0]
         }
         if(res.code == 1){
@@ -87,6 +92,7 @@ Page({
             bannerUrl:res.data.banner,
             lists:newdata,
             isLoadmore:false,
+            materials:newmaterials,
           })
         }else{
           wx.showToast({

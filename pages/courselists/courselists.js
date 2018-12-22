@@ -15,7 +15,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTrainDetail(options.id)
+    // this.getTrainDetail(options.id)
+    // wx.setNavigationBarTitle({
+    //   title:options.name
+    // })
+    wx.setStorageSync('trainDetail',options)
   },
 
   /**
@@ -29,7 +33,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var options = wx.getStorageSync('trainDetail')
+    this.getTrainDetail(options.id)
+    wx.setNavigationBarTitle({
+      title:options.name
+    })
   },
 
   /**
@@ -70,7 +78,8 @@ Page({
   getTrainDetail(train_id){
     let that = this;
     let params = {
-      train_id:train_id
+      train_id:train_id,
+      token:wx.getStorageSync('token'),
     }
     network.postRequest('/index.php?s=/api/train.index/getTrainDetail',params,res=>{
       if(res.code == 1){
@@ -100,70 +109,70 @@ Page({
     var hasVideo = false;
     if(msg == 0){
       hasVideo = true;
-      return that.godetails(this.data.videLists[msg].video_url)
+      return that.godetails(this.data.videLists[msg].video_url,this.data.videLists[msg].video_name,this.data.videLists[msg].type,this.data.videLists[msg].id)
     }else{
       if(storage  == ''){
+       if(!this.data.videLists[msg-1].question && this.data.videLists[msg-1].is_see == 1){
+         return that.godetails(this.data.videLists[msg].video_url,this.data.videLists[msg].video_name,this.data.videLists[msg].type,this.data.videLists[msg].id)
+       }
        return that.ShowModal('有视频未观看或习题未作答')
       }
       else{
         storage.some(element => {
           if(element.id == this.data.videLists[msg-1].question_id){
             hasVideo = true
-            return that.godetails(this.data.videLists[msg].video_url)
+            return that.godetails(this.data.videLists[msg].video_url,this.data.videLists[msg].video_name,this.data.videLists[msg].type,this.data.videLists[msg].id)
+          }else{
+            if(!this.data.videLists[msg-1].question && this.data.videLists[msg-1].is_see == 1){
+              hasVideo = true
+              return that.godetails(this.data.videLists[msg].video_url,this.data.videLists[msg].video_name,this.data.videLists[msg].type,this.data.videLists[msg].id)
+            }
           }
         });
         
       }
     }
     if(!hasVideo){
+      console.log(1)
       that.ShowModal('有视频未观看或习题未作答')
     }
   },
   //检测习题可不可以进入
   tabExercises(e){
     var that = this;
-    var storage = wx.getStorageSync('answerList') 
     var btnid = e.target.dataset.btnid
     var question_id = this.data.videLists[btnid].question_id;
     var answer = this.data.videLists[btnid].question.answer;
-    var hasExercises = false;
-    if(btnid == 0){
-      hasExercises = true;
-      return that.goExam(question_id,answer)
+    if(that.data.videLists[btnid].is_see == 1){
+      that.goExam(question_id,answer)
     }else{
-      if(storage  == ''){
-        that.ShowModal('有视频未观看或习题未作答')
-      }
-      else{
-        storage.some(element => {
-          if(element.id == this.data.videLists[btnid-1].question_id){
-            hasExercises = true;
-            return that.goExam(question_id,answer)
-          }
-        });    
-      }
+      that.ShowModal('有视频未观看或习题未作答')
     }
-   if(!hasExercises){
-     that.ShowModal('有视频未观看或习题未作答')
-   }
   },
   tabExam(){
     var that = this;
-    var storage = wx.getStorageSync('answerList') 
+    var storage = wx.getStorageSync('answerList');
     var videLists = that.data.videLists;
-    var totalExam = []
+    var totalExam = [];
+    var lsExam = [];
     if(storage  == ''){
       return that.ShowModal('有视频未观看或习题未作答')
     }
     else{
-      storage.forEach(skey => {
-        videLists.forEach(vkey => {
-          if(skey.id == vkey.question_id){
-            totalExam.push(vkey)
+      videLists.forEach(vkey => {
+         if(vkey.question_id){
+          totalExam.push(vkey)
+         }
+      })
+      totalExam.forEach((tkey)=>{
+        storage.forEach((skey)=>{
+          if(tkey.question_id == skey.id){
+            lsExam.push(tkey)
           }
         })
       })
-      if(videLists.length == totalExam.length){
+      console.log(lsExam.length,totalExam.length)
+      if(lsExam.length == totalExam.length){
         return that.goRealExam()
       }else{
         return that.ShowModal('有视频未观看或习题未作答')
@@ -178,9 +187,9 @@ Page({
       content: content,
     })
   },
-  godetails(video_url){
+  godetails(video_url,video_name,type,id){
     wx.navigateTo({
-      url: "/pages/details/details?video_url=" + video_url
+      url: "/pages/details/details?video_url=" + video_url + '&name=' + video_name + '&type=' + type + '&id=' + id
     })
   },
   goExam(question_id,answer){

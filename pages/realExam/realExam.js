@@ -191,16 +191,24 @@ Page({
     var totalTime = this.data.time_num*60 - ((this.data.countDownMinute * 60 ) + Number(this.data.countDownSecond) )
     let params = {
       id: this.data.examId,
-      token:wx.getStorageSync('token'),
+      token:wx.getStorageSync('token')?wx.getStorageSync('token'):'oV2AN5OfGQBKL2tM3oAmJdYiA_1Y',
       total_time:totalTime,
       answer: selectData
     }
     network.postRequest('/index.php?s=/api/train.index/saveExam',params,res=>{
       if(res.code == 1){
         //提交成功就跳课程列表页面
-        wx.switchTab({
-          url: "/pages/course/course"
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: res.msg,
+          success:function(){
+            wx.switchTab({
+              url: "/pages/course/course"
+            })
+          }
         })
+        
       }else{
         that.ShowModal(res.msg)
       }
