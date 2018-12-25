@@ -138,6 +138,7 @@ Page({
       var obj = {};
       obj.title = item.title;
       obj.id = item.id
+      obj.no = item.no
       obj.items = [];
       for (var k of item.questionselect.split('&&')) {
         obj.items.push({
@@ -155,6 +156,7 @@ Page({
     var newdata = that.data.checkdata;
     var ID = e.detail.value.split(',')[0];
     var name = e.detail.value.split(',')[1];
+    var no = e.detail.value.split(',')[2];
     that.data.checkdata.forEach((item, position) => {
       if (item.id == ID) {
         newdata[position].items.forEach((value) => {
@@ -181,6 +183,7 @@ Page({
       var obj = {}
       obj.title = key.title;
       obj.id = key.id;
+      obj.no = key.no;
       for(var i of key.items){
         if(i.checked){
           obj.select = i.name;
@@ -196,12 +199,13 @@ Page({
       answer: selectData
     }
     network.postRequest('/index.php?s=/api/train.index/saveExam',params,res=>{
-      if(res.code == 1){
+      var ret = res.data.content;
+      if(ret.is_pass == 1){
         //提交成功就跳课程列表页面
         wx.showModal({
           title: '提示',
           showCancel: false,
-          content: res.msg,
+          content: ret.msg,
           success:function(){
             wx.switchTab({
               url: "/pages/course/course"
@@ -210,7 +214,7 @@ Page({
         })
         
       }else{
-        that.ShowModal(res.msg)
+        that.ShowModal(ret.msg)
       }
     },err=>{
       that.ShowModal('网络错误,请您稍后再试')

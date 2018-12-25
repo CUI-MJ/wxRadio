@@ -10,8 +10,9 @@ Page({
     userInfo: {},
     hasPhoneNumber:false,
     canIUse: wx.canIUse('button.open-type.getPhoneNumber'),
-    userName:'张三',
-    compony:'百度',
+    userName:'',
+    compony:'',
+    tel:'',
     listData:[]
   },
 
@@ -99,9 +100,9 @@ Page({
       console.log(newlist)
       if(res.code == 1){
         this.setData({
-          userName:res.data.user.nickName,
-          compony:'百度',
-          mobile:res.data.user.mobile,
+          userName:res.data.user.nick_name,
+          company:res.data.user.company,
+          tel:res.data.user.tel,
           listData:newlist
         })
       }else{

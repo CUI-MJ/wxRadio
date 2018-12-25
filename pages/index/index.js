@@ -11,17 +11,17 @@ Page({
   },
   //事件处理函数
   bindViewTap: function () {
-    if (this.data.audit_status == 1) {
-      wx.navigateTo({
-        url: '../reg/reg'
-      })
-    }
-    if (this.data.audit_status == 2) {
-      wx.switchTab({
-        url: "/pages/course/course", // 如果本地缓存有信息证明登陆过
-      })
-    }
-
+    if(this.data.audit_status){
+      if(this.data.audit_status == 2 && this.data.is_reg == 1) {
+        wx.switchTab({
+          url: "/pages/course/course", // 如果本地缓存有信息证明登陆过
+        })
+      }else{
+        wx.navigateTo({
+          url: '../reg/reg'
+        })
+      }
+    } 
   },
   onLoad: function () {
     if (app.globalData.userInfo) {

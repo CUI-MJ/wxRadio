@@ -34,3 +34,11 @@
 .isSelect{
     color: #999;
 }
+.nodata{
+    text-align: center;
+    height:200rpx;
+    line-height:200rpx;
+}
+.isSee{
+    color: #999
+}

@@ -18,7 +18,6 @@
                         </view>
                         <view class="weui-media-box__info">
                             <view class="weui-media-box__info__meta">{{item.name}}</view>
-                            <view class="weui-media-box__info__meta">发布时间：{{item.create_time}}</view>
                         </view>
                     </view>
                 </navigator> 
@@ -37,7 +36,7 @@
                         </view>
                         <view class="weui-media-box__info">
                             <view class="weui-media-box__info__meta">{{item.name}}</view>
-                            <view class="weui-media-box__info__meta">发布时间：{{item.create_time}}</view>
+                           <!-- <view class="weui-media-box__info__meta">发布时间：{{item.create_time}}</view> -->
                         </view>
                     </view>
                 </navigator> 

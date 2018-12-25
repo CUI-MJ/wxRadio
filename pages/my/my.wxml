@@ -19,7 +19,7 @@
 					<view class="weui-label">公司全称</view>
 				</view>
 				<view class="weui-cell__bd">
-				    <view class="detail_text">{{compony}}</view>
+				    <view class="detail_text">{{company}}</view>
 					 
 				</view>
 			</view>
@@ -34,10 +34,10 @@
 			</view>
 			<view class="weui-cell weui-cell_input">
 				<view class="weui-cell__hd">
-					<view class="weui-label">姓名</view>
+					<view class="weui-label">手机号</view>
 				</view>
 				<view class="weui-cell__bd">
-				    <view class="detail_text">{{mobile}}</view>
+				    <view class="detail_text">{{tel}}</view>
 				</view>
 			</view>
 		</view>
