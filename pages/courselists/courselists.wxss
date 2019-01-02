@@ -18,9 +18,11 @@
     font-size: 14px;
     color: #fff!important;
     background-color: cornflowerblue!important;
+    height:60rpx;
+    line-height:60rpx;
 }
 .weui-cell__bd,.cell__ft{
-    font-size: 14px;
+    font-size: 16px;
 }
 .courselists .submit{
     border-radius: 0;
@@ -31,4 +33,12 @@
 }
 .isSelect{
     color: #999;
+}
+.nodata{
+    text-align: center;
+    height:200rpx;
+    line-height:200rpx;
+}
+.isSee{
+    color: #999
 }

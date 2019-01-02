@@ -5,8 +5,8 @@
 .banner .banner-img{
     width:100%;
     float: left;
-    height:376rpx;
-    margin-top:-1rpx;
+    height:300rpx;
+    margin-top:-10rpx;    
 }
 .pd20{
     padding: 20px;

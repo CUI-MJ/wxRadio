@@ -7,7 +7,6 @@
 
 .radio-group .radio {
     display: flex;
-    justify-content: ;
 }
 
 /* radio未选中时样式 */
@@ -25,7 +24,9 @@
     align-items: center
 }
 
-.radioText {}
+.radioText {
+    margin-left: 5px;
+}
 
 .section_gap {
     margin-bottom: 15px;

@@ -13,7 +13,7 @@
     </view>
     <view class="page__bd">
         <view class="section section_gap" wx:for="{{checkdata}}" wx:for-index="idx" wx:for-item="itemName" wx:key="*this">
-            <text>{{itemName.title}}</text>
+            <text>{{itemName.no}}.{{itemName.title}}</text>
             <radio-group class="radio-group" bindchange="radioChange">
                <view wx:for-items="{{itemName.items}}" class="viewRadio">
                    <radio class="radio"  wx:key="*this" value="{{itemName.id}},{{item.name}}" checked="{{item.checked}}" data-checkid="{{itemName.checkid}}">

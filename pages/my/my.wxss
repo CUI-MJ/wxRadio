@@ -1,11 +1,15 @@
 /* pages/my/my.wxss */
+.page__hd{
+    padding: 25px 40px !important;
+}
 .my_hd{
     display: flex;
     justify-content:space-between;
     align-items:center;
+    background: #006f7c;
 }
 .my_hd .nick-name{
-
+    color: #fff;
 }
 .my_hd .avatar-url{
     width: 120rpx;

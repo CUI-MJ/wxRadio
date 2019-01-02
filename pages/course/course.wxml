@@ -10,7 +10,7 @@
       </view>
       <view class="weui-panel" wx:for="{{lists}}" wx:for-index="index" wx:key="that">
             <view  class="weui-panel__bd" bindtap="gopage" data-id='{{item.id}}'>
-                <navigator url="/pages/courselists/courselists?id={{item.id}}" hover-class="none"> 
+                <navigator url="/pages/courselists/courselists?id={{item.id}}&name={{item.name}}" hover-class="none"> 
                     <view class="weui-media-box weui-media-box_text" >
                         <!-- <view class="weui-media-box__title weui-media-box__title_in-text">标题一</view> -->
                         <view class="weui-media-box__desc">
@@ -18,7 +18,25 @@
                         </view>
                         <view class="weui-media-box__info">
                             <view class="weui-media-box__info__meta">{{item.name}}</view>
-                            <view class="weui-media-box__info__meta">发布时间：{{item.create_time}}</view>
+                        </view>
+                    </view>
+                </navigator> 
+            </view>
+      </view>
+      <view class="page__hd pd20">
+          <view class="page__title">资料库</view>
+      </view>
+      <view class="weui-panel" wx:for="{{materials}}" wx:for-index="index" wx:key="that">
+            <view  class="weui-panel__bd" bindtap="gopage" data-id='{{item.id}}'>
+                <navigator url="/pages/courselists/courselists?id={{item.id}}&name={{item.name}}" hover-class="none"> 
+                    <view class="weui-media-box weui-media-box_text" >
+                        <!-- <view class="weui-media-box__title weui-media-box__title_in-text">标题一</view> -->
+                        <view class="weui-media-box__desc">
+                        <image class="media-box_url" src="{{item.pic_url}}"></image>
+                        </view>
+                        <view class="weui-media-box__info">
+                            <view class="weui-media-box__info__meta">{{item.name}}</view>
+                           <!-- <view class="weui-media-box__info__meta">发布时间：{{item.create_time}}</view> -->
                         </view>
                     </view>
                 </navigator> 

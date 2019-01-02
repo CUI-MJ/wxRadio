@@ -12,7 +12,8 @@ Page({
     title:'',
     newdata:'',
     isHasTime:false,
-    examId:''
+    examId:'',
+    time_num:'',
   },
 
   /**
@@ -99,7 +100,7 @@ Page({
       totalSecond--;
       if (totalSecond < 0) {
         clearInterval(interval);
-        this.submit();
+        this.saveExam();
         wx.showToast({
           title: '考试结束',
         });
@@ -122,6 +123,7 @@ Page({
           checkdata:this.formatData(res.data.content.questions),
           isHasTime:true,
           examId:res.data.content.exam.id,
+          time_num:res.data.content.exam.time_num,
         })
       }else{
         that.ShowModal(res.msg)
@@ -136,6 +138,7 @@ Page({
       var obj = {};
       obj.title = item.title;
       obj.id = item.id
+      obj.no = item.no
       obj.items = [];
       for (var k of item.questionselect.split('&&')) {
         obj.items.push({
@@ -153,6 +156,7 @@ Page({
     var newdata = that.data.checkdata;
     var ID = e.detail.value.split(',')[0];
     var name = e.detail.value.split(',')[1];
+    var no = e.detail.value.split(',')[2];
     that.data.checkdata.forEach((item, position) => {
       if (item.id == ID) {
         newdata[position].items.forEach((value) => {
@@ -169,11 +173,17 @@ Page({
     });
   },
   saveExam(){
+    var that = this;
     var selectData = [];
+    if(this.data.newdata.length == 0 || !this.data.newdata){
+       that.ShowModal('请您作答试题')
+       return false;
+    }
     this.data.newdata.forEach((key)=>{
       var obj = {}
       obj.title = key.title;
       obj.id = key.id;
+      obj.no = key.no;
       for(var i of key.items){
         if(i.checked){
           obj.select = i.name;
@@ -181,18 +191,30 @@ Page({
         }
       }
     })
+    var totalTime = this.data.time_num*60 - ((this.data.countDownMinute * 60 ) + Number(this.data.countDownSecond) )
     let params = {
       id: this.data.examId,
+      token:wx.getStorageSync('token')?wx.getStorageSync('token'):'oV2AN5OfGQBKL2tM3oAmJdYiA_1Y',
+      total_time:totalTime,
       answer: selectData
     }
     network.postRequest('/index.php?s=/api/train.index/saveExam',params,res=>{
-      if(res.code == 1){
+      var ret = res.data.content;
+      if(ret.is_pass == 1){
         //提交成功就跳课程列表页面
-        wx.switchTab({
-          url: "/pages/course/course"
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: ret.msg,
+          success:function(){
+            wx.switchTab({
+              url: "/pages/course/course"
+            })
+          }
         })
+        
       }else{
-        that.ShowModal(res.msg)
+        that.ShowModal(ret.msg)
       }
     },err=>{
       that.ShowModal('网络错误,请您稍后再试')

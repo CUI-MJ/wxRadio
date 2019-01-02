@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/realExam/realExam",
     "pages/index/index",
+    "pages/realExam/realExam",
     "pages/course/course",
     "pages/my/my",
     "pages/reg/reg",
@@ -13,7 +13,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#006f7c",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "光疗培训",
     "navigationBarTextStyle": "#fff"
   },
   "tabBar": {
@@ -21,8 +21,8 @@
     "selectedColor": "#006f7c",
     "borderStyle": "black",
     "list": [{
-      "selectedIconPath": "/images/search02.png",
-      "iconPath": "/images/search01.png",
+      "selectedIconPath": "/images/house01.png",
+      "iconPath": "/images/house02.png",
       "pagePath": "pages/course/course",
       "text": "首页"
     }, {

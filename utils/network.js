@@ -6,6 +6,7 @@
  * fail:失败的回调
  */
 const host = 'http://sigemas2.shsmiles.com'
+// const host ="http://mytrain2.shsmiles.com"
 //post请求
 
 function postRequest(url, params, success, fail) {
