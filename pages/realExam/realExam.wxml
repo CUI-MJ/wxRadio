@@ -15,9 +15,12 @@
         <view class="section section_gap" wx:for="{{checkdata}}" wx:for-index="idx" wx:for-item="itemName" wx:key="*this">
             <text>{{itemName.title}}</text>
             <radio-group class="radio-group" bindchange="radioChange">
-                <radio class="radio" wx:for-items="{{itemName.items}}" wx:key="*this" value="{{itemName.id}},{{item.name}}" checked="{{item.checked}}" data-checkid="{{itemName.checkid}}">
-                    <text class="radioText">{{item.name}} : {{item.value}}</text>
-                </radio>
+               <view wx:for-items="{{itemName.items}}" class="viewRadio">
+                   <radio class="radio"  wx:key="*this" value="{{itemName.id}},{{item.name}}" checked="{{item.checked}}" data-checkid="{{itemName.checkid}}">
+                   </radio>
+                   <text class="radioText">{{item.name}} : {{item.value}}</text>
+                </view>
+               
             </radio-group>
         </view>
        <button class="weui-btn" type="primary" bindtap="saveExam">提交</button>

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/realExam/realExam",
     "pages/index/index",
     "pages/course/course",
     "pages/my/my",
@@ -7,7 +8,6 @@
     "pages/exam/exam",
     "pages/courselists/courselists",
     "pages/details/details",
-    "pages/realExam/realExam",
     "pages/logs/logs"
   ],
   "window": {
